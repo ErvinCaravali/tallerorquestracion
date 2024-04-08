@@ -2,6 +2,7 @@ version: "3"
 
 
 services:
+
   mystore_frontend:
     build:
       context: ./mystore_frontend
@@ -11,6 +12,7 @@ services:
        - mystore_ms
     ports:
       - "8085:80"
+
   mystore_ms:
     build:
       context: ./bigstore_ms
@@ -26,8 +28,7 @@ services:
       DB_NAME: ${MYSQL_DATABASE}
       URL : ${URL}
     ports:
-      - "4000:4000"    
-
+      - "4000:4000"
 
   bigstoredb:
     image: mysql:5.7
@@ -42,8 +43,6 @@ services:
       - mysql-data:/var/lib/mysql
 
 
-
-
   adminer:
     image: adminer:4.8.1
     restart: always
@@ -53,3 +52,4 @@ services:
 
 volumes:
   mysql-data:
+
