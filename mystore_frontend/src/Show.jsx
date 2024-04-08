@@ -8,7 +8,6 @@ const Show = () => {
   const [description, setDescription] = useState("");
   const [tableData, setTableData] = useState([]);
   const [showForm, setShowForm] = useState(true);
-  const [showTable, setShowTable] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:4000/categories/")
@@ -32,21 +31,10 @@ const Show = () => {
           .then((data) => {
             setTableData(data);
             setShowForm(false);
-            setShowTable(true);
             setName(""); // Limpiar el campo de nombre
             setDescription(""); // Limpiar el campo de descripción
           });
       });
-  }
-
-  const handleGoToTable = () => {
-    setShowForm(false);
-    setShowTable(true);
-  }
-
-  const handleGoBack = () => {
-    setShowForm(true);
-    setShowTable(false);
   }
 
   return (
@@ -59,7 +47,7 @@ const Show = () => {
       {showForm && (
         <Form onSubmit={handleSubmit} className="form">
           <Form.Group controlId="formName">
-            <Form.Label>Nombre</Form.Label> {/* Etiqueta para el campo de nombre */}
+            <Form.Label>Nombre</Form.Label>
             <Form.Control 
                type="text" 
                value={name} 
@@ -68,7 +56,7 @@ const Show = () => {
           </Form.Group>
 
           <Form.Group controlId="formDescription">
-            <Form.Label>Descripción</Form.Label> {/* Etiqueta para el campo de descripción */}
+            <Form.Label>Descripción</Form.Label>
             <Form.Control 
                 type="text" 
                 value={description} 
@@ -79,13 +67,10 @@ const Show = () => {
           <Button variant="primary" type="submit">
             Enviar 
           </Button>
-          <Button variant="info" onClick={handleGoToTable}>
-            Ir a la tabla
-          </Button>
         </Form>
       )}
 
-      {showTable && (
+      {tableData.length > 0 && (
         <div>
           <h2 className="table-heading">Tabla de Categorías</h2>
           <Table striped bordered hover className="table">
@@ -106,11 +91,6 @@ const Show = () => {
               ))}
             </tbody>
           </Table>
-          <div className="button-container">
-            <Button variant="info" onClick={handleGoBack}>
-              Volver
-            </Button>
-          </div>
         </div>
       )}
     </div>
